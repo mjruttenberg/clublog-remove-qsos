@@ -16,57 +16,55 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 
-
 def mainloop(STARTYEAR,STARTMONTH,STARTDAY,ENDYEAR,ENDMONTH,ENDDAY):
-  # go to the filter page and fill it in
-  driver.get("https://clublog.org/inspector.php")
+    # go to the filter page and fill it in
+    driver.get("https://clublog.org/inspector.php")
 
-  #set start year, month and day
-  # year
-  select = Select(driver.find_element(By.ID,"startyear"))
-  select.select_by_visible_text(STARTYEAR)
-  #select.select_by_index(1)
-  #select.select_by_value('2019')
+    #set start year, month and day
+    # year
+    select = Select(driver.find_element(By.ID,"startyear"))
+    select.select_by_visible_text(STARTYEAR)
+    #select.select_by_index(1)
+    #select.select_by_value('2019')
 
-  # month
-  select = Select(driver.find_element(By.ID,"startmonth"))
-  select.select_by_visible_text(STARTMONTH)
-  #select.select_by_index(10)
-  #select.select_by_value('11')
+    # month
+    select = Select(driver.find_element(By.ID,"startmonth"))
+    select.select_by_visible_text(STARTMONTH)
+    #select.select_by_index(10)
+    #select.select_by_value('11')
 
-  # day
-  select = Select(driver.find_element(By.ID,"startday"))
-  select.select_by_visible_text(STARTDAY)
-  #select.select_by_index(10)
-  #select.select_by_value('11')
+    # day
+    select = Select(driver.find_element(By.ID,"startday"))
+    select.select_by_visible_text(STARTDAY)
+    #select.select_by_index(10)
+    #select.select_by_value('11')
 
-  # set end year, month and day
-  select = Select(driver.find_element(By.NAME,"endyear"))
-  select.select_by_visible_text(ENDYEAR)
+    # set end year, month and day
+    select = Select(driver.find_element(By.NAME,"endyear"))
+    select.select_by_visible_text(ENDYEAR)
 
-  # month
-  select = Select(driver.find_element(By.NAME,"endmonth"))
-  select.select_by_visible_text(ENDMONTH)
+    # month
+    select = Select(driver.find_element(By.NAME,"endmonth"))
+    select.select_by_visible_text(ENDMONTH)
 
-  # day
-  select = Select(driver.find_element(By.NAME,"endday"))
-  select.select_by_visible_text(ENDDAY)
+    # day
+    select = Select(driver.find_element(By.NAME,"endday"))
+    select.select_by_visible_text(ENDDAY)
 
-  # click Search
-  driver.find_element(By.NAME, "test").click()
+    # click Search
+    driver.find_element(By.NAME, "test").click()
 
-  # check if delete button is present on the page. 
-  # If yes, click the X.
-  # If not, end the browser session as there are no records to delete
-  try:
-    driver.find_element(By.ID,"del1")
-    print("Delete button found - yay!")
-    driver.find_element(By.ID,"del1").click() # click X
-    mainloop()
-  except:
-    print("No Delete button found")
-    driver.quit()
-
+    # check if delete button is present on the page. 
+    # If yes, click the X.
+    # If not, end the browser session as there are no records to delete
+    try:
+        driver.find_element(By.ID,"del1")
+        print("Delete button found - yay!")
+        driver.find_element(By.ID,"del1").click() # click X
+        mainloop()
+    except:
+        print("No Delete button found")
+        driver.quit()
 
 # Set the constants
 CALLSIGN = "your callsign"
