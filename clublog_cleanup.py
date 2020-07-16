@@ -17,64 +17,73 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 
 
-def mainloop():
+def mainloop(STARTYEAR,STARTMONTH,STARTDAY,ENDYEAR,ENDMONTH,ENDDAY):
+  # go to the filter page and fill it in
   driver.get("https://clublog.org/inspector.php")
 
-  #set start year month and date
+  #set start year, month and day
   # year
   select = Select(driver.find_element(By.ID,"startyear"))
-  select.select_by_visible_text('2020')
+  select.select_by_visible_text(STARTYEAR)
   #select.select_by_index(1)
   #select.select_by_value('2019')
 
   # month
   select = Select(driver.find_element(By.ID,"startmonth"))
-  select.select_by_visible_text('7')
+  select.select_by_visible_text(STARTMONTH)
   #select.select_by_index(10)
   #select.select_by_value('11')
 
   # day
   select = Select(driver.find_element(By.ID,"startday"))
-  select.select_by_visible_text('15')
+  select.select_by_visible_text(STARTDAY)
   #select.select_by_index(10)
   #select.select_by_value('11')
 
+  # set end year, month and day
   select = Select(driver.find_element(By.NAME,"endyear"))
-  select.select_by_visible_text('2020')
+  select.select_by_visible_text(ENDYEAR)
 
   # month
   select = Select(driver.find_element(By.NAME,"endmonth"))
-  select.select_by_visible_text('7')
+  select.select_by_visible_text(ENDMONTH)
 
   # day
   select = Select(driver.find_element(By.NAME,"endday"))
-  select.select_by_visible_text('15')
+  select.select_by_visible_text(ENDDAY)
 
   # click Search
   driver.find_element(By.NAME, "test").click()
 
-  # check if delete button is present on the page
+  # check if delete button is present on the page. 
+  # If yes, click the X.
+  # If not, end the browser session as there are no records to delete
   try:
-    elementpresent = driver.find_element(By.ID,"del1")
+    driver.find_element(By.ID,"del1")
     print("Delete button found - yay!")
     driver.find_element(By.ID,"del1").click() # click X
     mainloop()
-
   except:
     print("No Delete button found")
     driver.quit()
 
 
-# Open a Chrome session. Relies on Chromedriver to be installed somewhere where PATH can see it
+# Set the constants
 CALLSIGN = "your callsign"
 CLUBLOGPASSWORD = "yourpassword"
+STARTYEAR = "2020"
+STARTMONTH = "7"
+STARTDAY = "15"
+ENDYEAR = "2020"
+ENDMONTH = "7"
+ENDDAY = "15"
 
+# Open a Chrome session. Relies on Chromedriver to be installed somewhere where PATH can see it
 driver = webdriver.Chrome() 
 driver.maximize_window()
 
-# Open the web page
+# Open the web page on the login screen
 driver.get("https://clublog.org/loginform.php") 
-
 
 # Find the username field by ID and send a value
 driver.find_element(By.ID, "fEmail").send_keys(CALLSIGN)
@@ -82,11 +91,8 @@ driver.find_element(By.ID, "fEmail").send_keys(CALLSIGN)
 # Find the password field byID and send a value
 driver.find_element(By.NAME, "fPassword").send_keys(CLUBLOGPASSWORD) 
 
-# wait for 3 seconds
-#time.sleep(3)
-
-# Find the Submit button using classes (the "." prefix means "class"), convert it to a CSS selector and then click it
+# Find the Submit button and click it
 driver.find_element(By.ID, "submit").click()
 
 # run the script
-mainloop()
+mainloop(STARTYEAR,STARTMONTH,STARTDAY,ENDYEAR,ENDMONTH,ENDDAY)
